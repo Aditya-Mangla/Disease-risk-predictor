@@ -1,4 +1,8 @@
 node_modules
 static
 .env
+.ipynb_checkpoints
+
 new.js
+
+/ML
