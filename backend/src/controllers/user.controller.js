@@ -57,9 +57,9 @@ const registerUser = AsyncHandler(async (req, res) => {
 
     // check for user creation response
     return res
-    .status(200)
+    .status(201)
     .json(
-        new ApiResponse(200, createdUser, "User registered successfully")
+        new ApiResponse(201, createdUser, "User registered successfully")
     )
 })
 
@@ -137,8 +137,59 @@ const logoutUser = AsyncHandler(async (req, res) => {
     )
 })
 
+const changeCurrentPassword = AsyncHandler(async (req, res) => {
+    const {oldPassword, newPassword, confirmPassword} = req.body
+
+    if(newPassword !== confirmPassword){
+        throw new ApiError(400, "New password and confirm password does not match")
+    }
+
+    const User = await user.findById(req.newUser?._id)
+    const isPasswordCorrect = await User.isPasswordCorrect(oldPassword)
+
+    if(!isPasswordCorrect){
+        throw new ApiError(400, "Invalid given password")
+    }
+
+    User.password = newPassword
+    await User.save({validateBeforeSave: false})
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200, {}, "Password changed successfully")
+    )
+})
+
+const updateAccountDetails = AsyncHandler(async (req, res) => {
+    const {fullName, email} = req.body
+
+    if(!(fullName && email)){
+        throw new ApiError(400, "All fields are required")
+    }
+
+    const updtUser = await user.findByIdAndUpdate(
+        req.newUser?._id, 
+        {
+            $set: {
+                fullName,
+                email: email
+            }
+        },
+        {new: true}
+    ).select("-password")
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200, updtUser, "Account details updated successfully")
+    )
+})
+
 export{
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    changeCurrentPassword,
+    updateAccountDetails
 }

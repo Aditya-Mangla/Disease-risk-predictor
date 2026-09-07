@@ -14,11 +14,13 @@ app.use(express.urlencoded({extended: true, limit: "15kb"}))
 app.use(cookieParser())
 
 
-// Import user routes
-
+// Importing routes
+import userRoutes from './routes/user.routes.js';
+import mlPredictionRoutes from './routes/mlModel.routes.js';
 
 // Routes declaration
-app.use("/api/v1/users", )
+app.use("/api/v1/users", userRoutes)
+app.use("/api/v1/prediction", mlPredictionRoutes)
 
 
 export { app }
