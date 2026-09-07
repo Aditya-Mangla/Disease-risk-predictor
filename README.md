@@ -24,3 +24,20 @@ The **Disease Risk Predictor** is an interactive health-tech application built t
 - **Data Visualization:** Seaborn, Matplotlib
 - **Web Framework:** [ReactJS, ExpressJS]
 - **Model Deployment:** []
+
+---
+
+## Overall flow summary of how backend handles predictions from the ML model
+Client Request → Express Route → handlePrediction(...) handler
+                                       ↓
+                              predictWithModel(url, body)
+                                       ↓
+                    Validate URL → Validate input → Fetch with timeout
+                                       ↓
+                    Parse JSON safely → Check response.ok
+                                       ↓
+                         Success: return data
+                         Failure: throw normalized ApiError
+                                       ↓
+                    handlePrediction wraps result in ApiResponse (200)
+                    OR AsyncHandler forwards ApiError to error middleware
