@@ -5,9 +5,9 @@ import {
     loginUser,
     logoutUser,
     updateAccountDetails,
-    getHistory,
     changeCurrentPassword
 } from '../controllers/user.controller.js';
+import { getMyPredictions } from '../controllers/prediction.controller.js';
 
 const router = Router()
 
@@ -18,7 +18,7 @@ router.route("/login").post(loginUser)
 router.route("/logout").post(verifyJWT, logoutUser)
 router.route("/update-account").post(verifyJWT, updateAccountDetails)
 router.route("/change-password").post(verifyJWT, changeCurrentPassword)
-router.route("/history").get(verifyJWT, getHistory)
+router.route("/history").get(verifyJWT, getMyPredictions)
 
 
 export default router

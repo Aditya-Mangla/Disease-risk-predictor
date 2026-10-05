@@ -1,0 +1,1224 @@
+/* =========================================
+   DISEASE RISK AUTHENTICATION DESIGN
+   ========================================= */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root {
+
+    --primary: #2563EB;
+
+    --primary-dark: #1E40AF;
+
+    --navy: #0F1F4B;
+
+    --light-blue: #EFF6FF;
+
+    --background: #F8FBFF;
+
+    --white: #FFFFFF;
+
+    --text: #0F1F4B;
+
+    --text-gray: #475569;
+
+    --border: #E2E8F0;
+
+    --success: #22C55E;
+
+}
+
+
+body {
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    min-height: 100vh;
+
+}
+
+
+/* =========================================
+   NAVBAR
+   ========================================= */
+
+
+.navbar {
+
+    height: 72px;
+
+    background: var(--white);
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+}
+
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    text-decoration: none;
+
+    color: var(--navy);
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+}
+
+
+.logo strong {
+
+    color: var(--primary);
+
+}
+
+
+.logo-icon {
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 10px;
+
+    background: var(--primary);
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 19px;
+
+}
+
+
+.navbar nav {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 30px;
+
+}
+
+
+.navbar nav a {
+
+    color: var(--navy);
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+}
+
+
+.navbar nav a:hover {
+
+    color: var(--primary);
+
+}
+
+
+.back-home {
+
+    border: 1px solid var(--primary);
+
+    color: var(--primary) !important;
+
+    padding: 10px 16px;
+
+    border-radius: 8px;
+
+    transition: 0.2s;
+
+}
+
+
+.back-home:hover {
+
+    background: var(--primary);
+
+    color: white !important;
+
+}
+
+
+/* =========================================
+   MAIN AUTH LAYOUT
+   ========================================= */
+
+
+.auth-page {
+
+    width: min(1200px, 92%);
+
+    margin: 45px auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 55px;
+
+    align-items: center;
+
+}
+
+
+/* =========================================
+   LEFT INFORMATION
+   ========================================= */
+
+
+.auth-info {
+
+    padding: 20px 10px;
+
+}
+
+
+.medical-image {
+
+    height: 250px;
+
+    position: relative;
+
+    max-width: 380px;
+
+    margin-bottom: 20px;
+
+}
+
+
+/* Shield */
+
+.shield {
+
+    position: absolute;
+
+    left: 55px;
+
+    top: 50px;
+
+    width: 145px;
+
+    height: 170px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #3B82F6,
+            #1D4ED8
+        );
+
+    clip-path:
+        polygon(
+            50% 0%,
+            90% 15%,
+            90% 55%,
+            75% 80%,
+            50% 100%,
+            25% 80%,
+            10% 55%,
+            10% 15%
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: white;
+
+    font-size: 55px;
+
+    box-shadow:
+        0 20px 40px
+        rgba(37, 99, 235, 0.25);
+
+}
+
+
+/* Medical Report */
+
+.report {
+
+    position: absolute;
+
+    right: 30px;
+
+    top: 20px;
+
+    width: 190px;
+
+    height: 220px;
+
+    background: white;
+
+    border: 2px solid #BFDBFE;
+
+    border-radius: 15px;
+
+    padding: 35px 20px 20px;
+
+    box-shadow:
+        0 20px 40px
+        rgba(15, 31, 75, 0.08);
+
+}
+
+
+/* Clipboard top */
+
+.report::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -13px;
+
+    left: 60px;
+
+    width: 70px;
+
+    height: 25px;
+
+    background: var(--primary);
+
+    border-radius: 8px;
+
+}
+
+
+.report-header {
+
+    width: 70px;
+
+    height: 10px;
+
+    background: var(--primary);
+
+    border-radius: 5px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.report-line {
+
+    height: 7px;
+
+    width: 100%;
+
+    background: #DBEAFE;
+
+    border-radius: 5px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.report-line.short {
+
+    width: 60%;
+
+}
+
+
+.check-row {
+
+    display: flex;
+
+    gap: 8px;
+
+    align-items: center;
+
+    margin-top: 12px;
+
+}
+
+
+.check-row i {
+
+    width: 18px;
+
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.check-row span {
+
+    height: 7px;
+
+    width: 80px;
+
+    background: #E2E8F0;
+
+    border-radius: 5px;
+
+}
+
+
+/* Heart */
+
+.heart {
+
+    position: absolute;
+
+    bottom: 5px;
+
+    left: 170px;
+
+    width: 65px;
+
+    height: 65px;
+
+    background: #EF4444;
+
+    border-radius: 50%;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 30px;
+
+    border: 6px solid white;
+
+    box-shadow:
+        0 10px 25px
+        rgba(239, 68, 68, 0.25);
+
+}
+
+
+/* Heading */
+
+.auth-info h1 {
+
+    font-size: 38px;
+
+    line-height: 1.15;
+
+    color: var(--navy);
+
+    margin-bottom: 15px;
+
+}
+
+
+.auth-info h1 span {
+
+    color: var(--primary);
+
+}
+
+
+.info-description {
+
+    color: var(--text-gray);
+
+    font-size: 16px;
+
+    line-height: 1.7;
+
+    max-width: 470px;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* =========================================
+   FEATURES
+   ========================================= */
+
+
+.feature {
+
+    display: flex;
+
+    gap: 14px;
+
+    margin: 20px 0;
+
+}
+
+
+.feature-icon {
+
+    min-width: 42px;
+
+    width: 42px;
+
+    height: 42px;
+
+    background: var(--primary);
+
+    color: white;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.feature h3 {
+
+    font-size: 14px;
+
+    color: var(--navy);
+
+    margin-bottom: 3px;
+
+}
+
+
+.feature p {
+
+    color: var(--text-gray);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================
+   PRIORITY BOX
+   ========================================= */
+
+
+.priority-box {
+
+    margin-top: 25px;
+
+    padding: 15px;
+
+    background: var(--light-blue);
+
+    border-radius: 10px;
+
+    border: 1px solid #DBEAFE;
+
+    display: flex;
+
+    gap: 12px;
+
+}
+
+
+.priority-icon {
+
+    color: var(--primary);
+
+    font-size: 22px;
+
+}
+
+
+.priority-box h4 {
+
+    font-size: 13px;
+
+    margin-bottom: 4px;
+
+}
+
+
+.priority-box p {
+
+    font-size: 11px;
+
+    color: var(--text-gray);
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================
+   AUTH CARD
+   ========================================= */
+
+
+.auth-card {
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    padding: 42px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(15, 31, 75, 0.07);
+
+}
+
+
+.register-card {
+
+    padding-top: 35px;
+
+}
+
+
+/* Form Header */
+
+.form-header h2 {
+
+    font-size: 28px;
+
+    color: var(--navy);
+
+    margin-bottom: 10px;
+
+}
+
+
+.form-header p {
+
+    color: var(--text-gray);
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    margin-bottom: 28px;
+
+}
+
+
+/* =========================================
+   INPUTS
+   ========================================= */
+
+
+.input-group {
+
+    margin-bottom: 19px;
+
+}
+
+
+.input-group label {
+
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 8px;
+
+    color: var(--navy);
+
+}
+
+
+.input-wrapper {
+
+    position: relative;
+
+}
+
+
+.input-wrapper > i {
+
+    position: absolute;
+
+    left: 14px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #64748B;
+
+    font-size: 14px;
+
+}
+
+
+.input-wrapper input {
+
+    width: 100%;
+
+    height: 48px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    padding: 0 45px;
+
+    font-size: 14px;
+
+    outline: none;
+
+    color: var(--navy);
+
+    transition: 0.2s;
+
+}
+
+
+.input-wrapper input:focus {
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(37, 99, 235, 0.1);
+
+}
+
+
+.input-wrapper input::placeholder {
+
+    color: #94A3B8;
+
+}
+
+
+.password-toggle {
+
+    position: absolute;
+
+    right: 13px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    color: #64748B;
+
+    cursor: pointer;
+
+}
+
+
+.input-group small {
+
+    display: block;
+
+    color: #64748B;
+
+    font-size: 10px;
+
+    margin-top: 5px;
+
+}
+
+
+/* =========================================
+   FORGOT PASSWORD
+   ========================================= */
+
+
+.forgot-password {
+
+    text-align: right;
+
+    margin: -5px 0 20px;
+
+}
+
+
+.forgot-password a {
+
+    color: var(--primary);
+
+    font-size: 12px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================
+   PRIMARY BUTTON
+   ========================================= */
+
+
+.primary-button {
+
+    width: 100%;
+
+    height: 48px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    transition: 0.2s;
+
+}
+
+
+.primary-button:hover {
+
+    background: var(--primary-dark);
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================
+   DIVIDER
+   ========================================= */
+
+
+.divider {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 22px 0;
+
+    color: #94A3B8;
+
+    font-size: 12px;
+
+}
+
+
+.divider::before,
+.divider::after {
+
+    content: "";
+
+    height: 1px;
+
+    background: var(--border);
+
+    flex: 1;
+
+}
+
+
+/* =========================================
+   GOOGLE BUTTON
+   ========================================= */
+
+
+.google-button {
+
+    width: 100%;
+
+    height: 46px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: var(--navy);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+}
+
+
+.google-button:hover {
+
+    background: #F8FAFC;
+
+}
+
+
+.google-icon {
+
+    font-weight: 700;
+
+    font-size: 18px;
+
+    color: #4285F4;
+
+}
+
+
+/* =========================================
+   LOGIN NOTICE
+   ========================================= */
+
+
+.login-notice {
+
+    display: flex;
+
+    gap: 12px;
+
+    padding: 14px;
+
+    background: var(--light-blue);
+
+    border: 1px solid #DBEAFE;
+
+    border-radius: 9px;
+
+    margin-top: 22px;
+
+}
+
+
+.notice-icon {
+
+    color: var(--primary);
+
+    font-size: 20px;
+
+}
+
+
+.login-notice strong {
+
+    display: block;
+
+    font-size: 12px;
+
+    margin-bottom: 4px;
+
+}
+
+
+.login-notice p {
+
+    color: var(--text-gray);
+
+    font-size: 10px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================
+   TERMS
+   ========================================= */
+
+
+.terms {
+
+    display: flex;
+
+    gap: 8px;
+
+    align-items: flex-start;
+
+    font-size: 11px;
+
+    color: var(--text-gray);
+
+    margin: 5px 0 20px;
+
+    line-height: 1.5;
+
+}
+
+
+.terms input {
+
+    margin-top: 3px;
+
+    accent-color: var(--primary);
+
+}
+
+
+.terms a {
+
+    color: var(--primary);
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================
+   SWITCH LOGIN / REGISTER
+   ========================================= */
+
+
+.switch-page {
+
+    text-align: center;
+
+    margin-top: 20px;
+
+    font-size: 12px;
+
+    color: var(--text-gray);
+
+}
+
+
+.switch-page a {
+
+    color: var(--primary);
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    margin-left: 4px;
+
+}
+
+
+.switch-page a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+
+footer {
+
+    text-align: center;
+
+    color: #64748B;
+
+    font-size: 11px;
+
+    padding: 25px;
+
+    border-top: 1px solid var(--border);
+
+    background: white;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+
+@media (max-width: 900px) {
+
+    .auth-page {
+
+        grid-template-columns: 1fr;
+
+        max-width: 600px;
+
+        gap: 20px;
+
+    }
+
+
+    .auth-info {
+
+        text-align: center;
+
+    }
+
+
+    .medical-image {
+
+        margin-left: auto;
+
+        margin-right: auto;
+
+    }
+
+
+    .info-description {
+
+        margin-left: auto;
+
+        margin-right: auto;
+
+    }
+
+
+    .feature {
+
+        text-align: left;
+
+    }
+
+
+    .priority-box {
+
+        text-align: left;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .navbar {
+
+        padding: 0 20px;
+
+    }
+
+
+    .navbar nav a:not(.back-home) {
+
+        display: none;
+
+    }
+
+
+    .back-home {
+
+        padding: 8px 10px;
+
+    }
+
+
+    .auth-page {
+
+        width: 94%;
+
+        margin: 25px auto;
+
+    }
+
+
+    .auth-card {
+
+        padding: 25px 20px;
+
+    }
+
+
+    .auth-info h1 {
+
+        font-size: 30px;
+
+    }
+
+
+    .medical-image {
+
+        transform: scale(0.85);
+
+        transform-origin: left center;
+
+    }
+
+}

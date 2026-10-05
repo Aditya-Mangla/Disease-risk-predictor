@@ -16,10 +16,12 @@ app.use(cookieParser())
 
 // Importing routes
 import userRoutes from './routes/user.routes.js';
+import predictionRoutes from './routes/prediction.routes.js';
 import mlPredictionRoutes from './routes/mlModel.routes.js';
 
 // Routes declaration
 app.use("/api/v1/users", userRoutes)
+app.use("/api/v1/prediction", predictionRoutes)
 app.use("/api/v1/prediction", mlPredictionRoutes)
 
 

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Risk - Login</title>
+
+    <link rel="stylesheet" href="loginandregister.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+        <span class="logo-icon">
+            <i class="fa-solid fa-shield-heart"></i>
+        </span>
+        <span>Disease <strong>Risk</strong></span>
+    </a>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#">About</a>
+        <a href="index.html" class="back-home">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </nav>
+
+</header>
+
+
+<main class="auth-page">
+
+    <!-- LEFT SIDE -->
+    <section class="auth-info">
+
+        <div class="medical-image">
+            <div class="shield">
+                <i class="fa-solid fa-plus"></i>
+            </div>
+
+            <div class="report">
+                <div class="report-header"></div>
+
+                <div class="report-line"></div>
+                <div class="report-line short"></div>
+
+                <div class="check-row">
+                    <i class="fa-solid fa-check"></i>
+                    <span></span>
+                </div>
+
+                <div class="check-row">
+                    <i class="fa-solid fa-check"></i>
+                    <span></span>
+                </div>
+
+                <div class="check-row">
+                    <i class="fa-solid fa-check"></i>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="heart">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+        </div>
+
+
+        <h1>
+            Understand Your
+            <span>Health Risk</span>
+        </h1>
+
+        <p class="info-description">
+            AI-powered risk assessment that helps you take control
+            of your health and live a better life.
+        </p>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-chart-column"></i>
+            </div>
+
+            <div>
+                <h3>Accurate Risk Prediction</h3>
+                <p>
+                    Advanced AI analyzes your data for meaningful insights.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <div>
+                <h3>Secure & Confidential</h3>
+                <p>
+                    Your health information is protected and secure.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+
+            <div>
+                <h3>Track Your Progress</h3>
+                <p>
+                    View your assessment history and monitor your risk.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="priority-box">
+
+            <div class="priority-icon">
+                <i class="fa-solid fa-shield-heart"></i>
+            </div>
+
+            <div>
+                <h4>Your Health, Our Priority</h4>
+
+                <p>
+                    We are committed to providing secure,
+                    reliable, and meaningful health insights.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOGIN FORM -->
+    <section class="auth-card">
+
+        <div class="form-header">
+
+            <h2>Welcome Back! 👋</h2>
+
+            <p>
+                Login to access your personalized health dashboard,
+                assessment history, and risk insights.
+            </p>
+
+        </div>
+
+
+        <form id="loginForm">
+
+            <div class="input-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fa-regular fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('password', this)"
+                    >
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="forgot-password">
+
+                <a href="#">
+                    Forgot Password?
+                </a>
+
+            </div>
+
+
+            <button type="submit" class="primary-button">
+
+                <i class="fa-solid fa-lock"></i>
+
+                Login
+
+            </button>
+
+
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+
+            <button type="button" class="google-button">
+
+                <span class="google-icon">G</span>
+
+                Continue with Google
+
+            </button>
+
+
+            <div class="login-notice">
+
+                <div class="notice-icon">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+
+                <div>
+
+                    <strong>Login to check your risk</strong>
+
+                    <p>
+                        Create your health profile to unlock
+                        your personalized risk assessment.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <p class="switch-page">
+
+                Don't have an account?
+
+                <a href="register.html">
+                    Create an Account
+                </a>
+
+            </p>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    © 2026 Disease Risk. All rights reserved.
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

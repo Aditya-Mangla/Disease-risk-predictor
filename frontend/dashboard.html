@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Disease Risk - Dashboard</title>
+
+    <link rel="stylesheet"
+          href="dashboard.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<header class="dashboard-navbar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            <i class="fa-solid fa-shield-heart"></i>
+        </div>
+
+        Disease <strong>Risk</strong>
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <button id="dashboardLogout">
+            Logout
+        </button>
+
+    </nav>
+
+</header>
+
+
+<main class="dashboard-container">
+
+
+    <!-- PROFILE -->
+
+    <section class="welcome-section">
+
+        <div>
+
+            <span>
+                DASHBOARD
+            </span>
+
+            <h1 id="welcomeText">
+                Welcome back!
+            </h1>
+
+            <p>
+                View your health assessment history
+                and previous risk results.
+            </p>
+
+        </div>
+
+
+        <button
+            class="new-assessment-btn"
+            onclick="window.location.href='index.html'">
+
+            <i class="fa-solid fa-plus"></i>
+
+            New Assessment
+
+        </button>
+
+    </section>
+
+
+    <!-- STATISTICS -->
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+
+            <div>
+
+                <span>
+                    Total Assessments
+                </span>
+
+                <strong id="totalAssessments">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                <i class="fa-solid fa-virus"></i>
+            </div>
+
+            <div>
+
+                <span>
+                    Latest Disease
+                </span>
+
+                <strong id="latestDisease">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+
+            <div>
+
+                <span>
+                    Latest Risk
+                </span>
+
+                <strong id="latestRisk">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROFILE -->
+
+    <section class="profile-card">
+
+        <div class="profile-avatar">
+
+            <i class="fa-solid fa-user"></i>
+
+        </div>
+
+
+        <div>
+
+            <h2 id="profileName">
+                User
+            </h2>
+
+            <p id="profileEmail">
+                user@email.com
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+
+    <section class="history-section">
+
+        <div class="section-title">
+
+            <div>
+
+                <span>
+                    HISTORY
+                </span>
+
+                <h2>
+                    Your Assessments
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="historyContainer"
+            class="history-container">
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="dashboard.js"></script>
+
+</body>
+
+</html>

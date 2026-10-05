@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Disease Risk - AI Health Risk Assessment</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        <div class="logo-icon">
+            <i class="fa-solid fa-shield-heart"></i>
+        </div>
+
+        <span>Disease <strong>Risk</strong></span>
+    </div>
+
+    <nav class="nav-links">
+
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#how-it-works">How It Works</a>
+
+        <div id="authButtons">
+            <a href="login.html" class="login-link">Login</a>
+
+            <a href="register.html" class="register-btn">
+                Register
+            </a>
+        </div>
+
+        <div id="userMenu" class="user-menu hidden">
+
+            <button id="dashboardBtn">
+                <i class="fa-solid fa-user"></i>
+                Dashboard
+            </button>
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<main id="home">
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            <i class="fa-solid fa-shield-heart"></i>
+            AI-Powered Health Assessment
+        </div>
+
+        <h1>
+            Understand Your
+            <span>Health Risk</span>
+        </h1>
+
+        <p>
+            Check your symptoms and get an AI-powered disease
+            prediction. Registered users can also check their
+            estimated health risk.
+        </p>
+
+        <button class="primary-btn" id="startAssessmentBtn">
+            Start Health Assessment
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+    </div>
+
+
+    <div class="hero-illustration">
+
+        <div class="hero-circle"></div>
+
+        <div class="hero-shield">
+            <i class="fa-solid fa-shield-heart"></i>
+        </div>
+
+        <div class="floating-card card-one">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <span>Health Check</span>
+        </div>
+
+        <div class="floating-card card-two">
+            <i class="fa-solid fa-check"></i>
+            <span>AI Analysis</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="info-section" id="about">
+
+    <div class="section-heading">
+
+        <span>ABOUT</span>
+
+        <h2>
+            Your Health,
+            <strong>Our Priority</strong>
+        </h2>
+
+        <p>
+            Disease Risk helps you understand possible health
+            conditions based on the symptoms you provide.
+        </p>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+
+            <h3>AI Prediction</h3>
+
+            <p>
+                Analyze your symptoms and receive a predicted
+                disease from the backend AI model.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <h3>Secure Access</h3>
+
+            <p>
+                Disease risk information is available only
+                to registered and logged-in users.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+
+            <h3>Assessment History</h3>
+
+            <p>
+                Logged-in users can view their previous
+                disease predictions and risk assessments.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section class="how-section" id="how-it-works">
+
+    <div class="section-heading">
+
+        <span>PROCESS</span>
+
+        <h2>
+            How It <strong>Works</strong>
+        </h2>
+
+    </div>
+
+
+    <div class="steps-grid">
+
+        <div class="process-card">
+
+            <div class="process-number">1</div>
+
+            <h3>Enter Symptoms</h3>
+
+            <p>
+                Answer questions about your current symptoms.
+            </p>
+
+        </div>
+
+
+        <div class="process-card">
+
+            <div class="process-number">2</div>
+
+            <h3>Get Prediction</h3>
+
+            <p>
+                Our backend analyzes your symptoms and predicts
+                a possible disease.
+            </p>
+
+        </div>
+
+
+        <div class="process-card">
+
+            <div class="process-number">3</div>
+
+            <h3>Check Your Risk</h3>
+
+            <p>
+                Registered users can request their estimated
+                disease risk.
+            </p>
+
+        </div>
+
+
+        <div class="process-card">
+
+            <div class="process-number">4</div>
+
+            <h3>View History</h3>
+
+            <p>
+                Your previous assessments are available
+                from your dashboard.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ================================================= -->
+<!-- ASSESSMENT MODAL -->
+<!-- ================================================= -->
+
+<div id="assessmentOverlay" class="assessment-overlay hidden">
+
+    <div class="assessment-modal">
+
+        <div class="assessment-header">
+
+            <div>
+
+                <span class="assessment-label">
+                    HEALTH ASSESSMENT
+                </span>
+
+                <h2>Tell Us About Your Symptoms</h2>
+
+            </div>
+
+            <button id="closeAssessment" class="close-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="assessment-progress">
+
+            <div class="progress-info">
+
+                <span id="pageText">
+                    Page 1 of 4
+                </span>
+
+                <span id="questionRange">
+                    Questions 1-12
+                </span>
+
+            </div>
+
+            <div class="progress-track">
+                <div id="progressBar"></div>
+            </div>
+
+        </div>
+
+
+        <div id="assessmentMessage"
+             class="assessment-message">
+        </div>
+
+
+        <div id="symptomList"
+             class="symptom-list">
+        </div>
+
+
+        <div class="assessment-navigation">
+
+            <button id="backButton"
+                    class="secondary-btn">
+
+                <i class="fa-solid fa-arrow-left"></i>
+                Back
+
+            </button>
+
+
+            <span id="smallPageIndicator">
+                1 / 4
+            </span>
+
+
+            <button id="nextButton"
+                    class="primary-small-btn">
+
+                Next
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+            <button id="finishButton"
+                    class="primary-small-btn hidden">
+
+                Check My Disease
+                <i class="fa-solid fa-stethoscope"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- APP STATE OVERLAY -->
+<!-- ================================================= -->
+
+<div id="appStateOverlay"
+     class="app-state-overlay hidden">
+
+    <div id="appStateContent"></div>
+
+</div>
+
+
+<footer>
+
+    <p>
+        © 2026 Disease Risk. All rights reserved.
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

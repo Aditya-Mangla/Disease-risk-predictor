@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Disease Risk - Register</title>
+
+    <link rel="stylesheet" href="loginandregister.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+
+        <span class="logo-icon">
+            <i class="fa-solid fa-shield-heart"></i>
+        </span>
+
+        <span>
+            Disease <strong>Risk</strong>
+        </span>
+
+    </a>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="#">
+            About
+        </a>
+
+        <a href="index.html" class="back-home">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Home
+
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="auth-page">
+
+
+    <!-- LEFT INFORMATION -->
+
+    <section class="auth-info">
+
+
+        <div class="medical-image">
+
+            <div class="shield">
+
+                <i class="fa-solid fa-plus"></i>
+
+            </div>
+
+
+            <div class="report">
+
+                <div class="report-header"></div>
+
+                <div class="report-line"></div>
+
+                <div class="report-line short"></div>
+
+
+                <div class="check-row">
+
+                    <i class="fa-solid fa-check"></i>
+
+                    <span></span>
+
+                </div>
+
+
+                <div class="check-row">
+
+                    <i class="fa-solid fa-check"></i>
+
+                    <span></span>
+
+                </div>
+
+
+                <div class="check-row">
+
+                    <i class="fa-solid fa-check"></i>
+
+                    <span></span>
+
+                </div>
+
+            </div>
+
+
+            <div class="heart">
+
+                <i class="fa-solid fa-heart-pulse"></i>
+
+            </div>
+
+        </div>
+
+
+
+        <h1>
+
+            Start Your Journey
+
+            <span>to Better Health</span>
+
+        </h1>
+
+
+        <p class="info-description">
+
+            Create an account to save your assessments,
+            view your history, and monitor your risk insights.
+
+        </p>
+
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-file-medical"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>Save Assessments</h3>
+
+                <p>
+                    Store your health assessments securely.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>Track Your Risk</h3>
+
+                <p>
+                    Monitor your risk trends over time.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-user-shield"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>Personalized Insights</h3>
+
+                <p>
+                    Get useful insights based on your assessments.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="priority-box">
+
+            <div class="priority-icon">
+
+                <i class="fa-solid fa-shield-heart"></i>
+
+            </div>
+
+
+            <div>
+
+                <h4>Your Health, Our Priority</h4>
+
+                <p>
+                    We are committed to providing secure,
+                    reliable, and meaningful health insights.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- REGISTER FORM -->
+
+    <section class="auth-card register-card">
+
+
+        <div class="form-header">
+
+            <h2>
+                Create Your Account
+            </h2>
+
+            <p>
+                Create an account to save your assessments
+                and unlock personalized risk insights.
+            </p>
+
+        </div>
+
+
+
+        <form id="registerForm">
+
+
+            <!-- NAME -->
+
+            <div class="input-group">
+
+                <label for="name">
+                    Full Name
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="fa-regular fa-user"></i>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="input-group">
+
+                <label for="registerEmail">
+                    Email
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="fa-regular fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        id="registerEmail"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="input-group">
+
+                <label for="registerPassword">
+                    Password
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        name="password"
+                        placeholder="Create a password"
+                        minlength="8"
+                        required
+                    >
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('registerPassword', this)"
+                    >
+
+                        <i class="fa-regular fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+
+                <small>
+                    Use 8+ characters with a mix of letters,
+                    numbers & symbols.
+                </small>
+
+            </div>
+
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="input-group">
+
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('confirmPassword', this)"
+                    >
+
+                        <i class="fa-regular fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TERMS -->
+
+            <label class="terms">
+
+                <input
+                    type="checkbox"
+                    id="terms"
+                    required
+                >
+
+                <span>
+                    I agree to the
+                    <a href="#">Terms of Service</a>
+                    and
+                    <a href="#">Privacy Policy</a>
+                </span>
+
+            </label>
+
+
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="primary-button"
+            >
+
+                <i class="fa-solid fa-user-plus"></i>
+
+                Create Account
+
+            </button>
+
+
+
+            <!-- DIVIDER -->
+
+            <div class="divider">
+
+                <span>or</span>
+
+            </div>
+
+
+
+            <!-- GOOGLE -->
+
+            <button
+                type="button"
+                class="google-button"
+            >
+
+                <span class="google-icon">
+                    G
+                </span>
+
+                Sign up with Google
+
+            </button>
+
+
+
+            <!-- LOGIN -->
+
+            <p class="switch-page">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </p>
+
+
+        </form>
+
+    </section>
+
+
+</main>
+
+
+
+<footer>
+
+    © 2026 Disease Risk. All rights reserved.
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
