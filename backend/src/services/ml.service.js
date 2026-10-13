@@ -1,7 +1,7 @@
+import 'dotenv/config';
 import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { AsyncHandler } from '../utils/AsyncHandler.js';
-import { prediction } from '../models/prediction.model.js';
 
 const requestTimeoutMs = Number(process.env.ML_REQUEST_TIMEOUT_MS || 10000);
 
@@ -129,25 +129,13 @@ const handlePrediction = (modelEnvironmentVariable, predictionType, modelType) =
     validateInput(modelType, req.body);
 
     const predictedDisease = req.header('X-Predicted-Disease');
-    const parentPredictionId = req.header('X-Prediction-Id');
-    let parentPrediction;
 
     if (modelType !== 'disease') {
-        if (!parentPredictionId) {
-            throw new ApiError(400, 'X-Prediction-Id header is required for risk prediction');
+        if (!predictedDisease) {
+            throw new ApiError(400, 'X-Predicted-Disease header is required for risk prediction');
         }
 
-        parentPrediction = await prediction.findOne({
-            _id: parentPredictionId,
-            user: req.newUser._id,
-            stage: 'classification'
-        });
-
-        if (!parentPrediction) {
-            throw new ApiError(404, 'Classification prediction was not found');
-        }
-
-        if (!followUpMatchesModel(parentPrediction.predictedDisease, modelType)) {
+        if (!followUpMatchesModel(predictedDisease, modelType)) {
             throw new ApiError(400, 'Selected risk model does not match the predicted disease');
         }
     }
@@ -161,20 +149,9 @@ const handlePrediction = (modelEnvironmentVariable, predictionType, modelType) =
         ? getFollowUp(modelResult.predicted_disease)
         : null;
 
-    const savedPrediction = await prediction.create({
-        user: req.newUser._id,
-        predictionType,
-        stage: modelType === 'disease' ? 'classification' : 'risk',
-        predictedDisease: parentPrediction?.predictedDisease || predictedDisease || followUp?.disease,
-        parentPrediction: parentPrediction?._id,
-        inputData: req.body,
-        result: modelResult,
-        status: 'completed'
-    });
-
     const responseData = modelType === 'disease'
-        ? { ...modelResult, followUp, predictionId: savedPrediction._id }
-        : { ...modelResult, predictionId: savedPrediction._id };
+        ? { ...modelResult, followUp }
+        : modelResult;
 
     return res
     .status(200)
@@ -185,25 +162,25 @@ const handlePrediction = (modelEnvironmentVariable, predictionType, modelType) =
 
 
 const diseasePrediction = handlePrediction(
-    'DISEASE_MODEL_URL',                                // Add the Disease model URL here.
+    `${process.env.DISEASE_MODEL_URL}`,
     'Disease classification',
     'disease'
 );
 
 const heartAttackRiskPrediction = handlePrediction(
-    'HEART_MODEL_URL',                                  // Add the Heart model URL here.
+    `${process.env.HEART_MODEL_URL}`,
     'Heart disease risk',
     'heart'
 );
 
 const strokeRiskPrediction = handlePrediction(
-    'STROKE_MODEL_URL',                                 // Add the Stroke model URL here.
+    `${process.env.STROKE_MODEL_URL}`,
     'Stroke risk',
     'stroke'
 );
 
 const diabetesRiskPrediction = handlePrediction(
-    'DIABETES_MODEL_URL',                               // Add the Diabetes model URL here.
+    `${process.env.DIABETES_MODEL_URL}`,
     'Diabetes risk',
     'diabetes'
 );

@@ -6,7 +6,7 @@ import {prediction} from '../models/prediction.model.js';
 
 
 const createPrediction = AsyncHandler(async (req, res) => {
-    const { type, inputData, result, status } = req.body
+    const { type, inputData, result, status, stage, predictedDisease, parentPrediction } = req.body
 
     if (!type) {
         throw new ApiError(400, 'Prediction type is required')
@@ -21,7 +21,9 @@ const createPrediction = AsyncHandler(async (req, res) => {
     const predictionDoc = await prediction.create({
         user: userId,
         predictionType: type,
-        stage: 'manual',
+        stage,
+        predictedDisease,
+        parentPrediction,
         inputData: inputData || {},
         result: result || {},
         status: status || 'completed'
