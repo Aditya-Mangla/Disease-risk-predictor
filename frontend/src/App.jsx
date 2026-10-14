@@ -10,9 +10,9 @@ import {
   registerUser,
   loginUser,
 } from "./api";
-import DiabetesRisk from "./DiabetesRisk";
-import HeartRisk from "./HeartRisk";
-import StrokeRisk from "./StrokeRisk";
+import DiabetesRisk from "../components/DiabetesRisk";
+import HeartRisk from "../components/HeartRisk";
+import StrokeRisk from "../components/StrokeRisk";
 
 const symptoms = [
   "chest_pain",
