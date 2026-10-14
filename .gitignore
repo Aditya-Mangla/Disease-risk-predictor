@@ -6,3 +6,4 @@ static
 new.js
 __pycache__/
 *.py[cod]
+dist

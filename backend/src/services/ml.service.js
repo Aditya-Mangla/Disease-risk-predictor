@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { AsyncHandler } from '../utils/AsyncHandler.js';
@@ -161,25 +162,25 @@ const handlePrediction = (modelEnvironmentVariable, predictionType, modelType) =
 
 
 const diseasePrediction = handlePrediction(
-    'DISEASE_MODEL_URL',                                // Add the Disease model URL here.
+    `${process.env.DISEASE_MODEL_URL}`,
     'Disease classification',
     'disease'
 );
 
 const heartAttackRiskPrediction = handlePrediction(
-    'HEART_MODEL_URL',                                  // Add the Heart model URL here.
+    `${process.env.HEART_MODEL_URL}`,
     'Heart disease risk',
     'heart'
 );
 
 const strokeRiskPrediction = handlePrediction(
-    'STROKE_MODEL_URL',                                 // Add the Stroke model URL here.
+    `${process.env.STROKE_MODEL_URL}`,
     'Stroke risk',
     'stroke'
 );
 
 const diabetesRiskPrediction = handlePrediction(
-    'DIABETES_MODEL_URL',                               // Add the Diabetes model URL here.
+    `${process.env.DIABETES_MODEL_URL}`,
     'Diabetes risk',
     'diabetes'
 );

@@ -1,1 +1,1 @@
-export const DB_NAME = "";  //add the database name here
+export const DB_NAME = "Disease_risk";  //add the database name here
