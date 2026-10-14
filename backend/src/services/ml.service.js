@@ -44,8 +44,8 @@ const validateInput = (modelType, input) => {
         throw new ApiError(400, `Missing prediction fields: ${missingFields.join(', ')}`);
     }
 
-    if (modelType === 'disease' && (!Array.isArray(input.symptoms) || input.symptoms.length === 0)) {
-        throw new ApiError(400, 'Symptoms must be a non-empty array');
+    if (modelType === 'disease' && !Array.isArray(input.symptoms)) {
+        throw new ApiError(400, 'Symptoms must be an array');
     }
 };
 
@@ -125,7 +125,7 @@ const followUpMatchesModel = (disease, modelType) => {
     return followUp?.disease === modelType;
 };
 
-const handlePrediction = (modelEnvironmentVariable, predictionType, modelType) => AsyncHandler(async (req, res) => {
+const handlePrediction = (modelUrl, predictionType, modelType) => AsyncHandler(async (req, res) => {
     validateInput(modelType, req.body);
 
     const predictedDisease = req.header('X-Predicted-Disease');
@@ -141,7 +141,7 @@ const handlePrediction = (modelEnvironmentVariable, predictionType, modelType) =
     }
 
     const modelResult = await predictWithModel(
-        process.env[modelEnvironmentVariable],
+        modelUrl,
         req.body
     );
 
@@ -162,25 +162,25 @@ const handlePrediction = (modelEnvironmentVariable, predictionType, modelType) =
 
 
 const diseasePrediction = handlePrediction(
-    `${process.env.DISEASE_MODEL_URL}`,
+    process.env.DISEASE_MODEL_URL,
     'Disease classification',
     'disease'
 );
 
 const heartAttackRiskPrediction = handlePrediction(
-    `${process.env.HEART_MODEL_URL}`,
+    process.env.HEART_MODEL_URL,
     'Heart disease risk',
     'heart'
 );
 
 const strokeRiskPrediction = handlePrediction(
-    `${process.env.STROKE_MODEL_URL}`,
+    process.env.STROKE_MODEL_URL,
     'Stroke risk',
     'stroke'
 );
 
 const diabetesRiskPrediction = handlePrediction(
-    `${process.env.DIABETES_MODEL_URL}`,
+    process.env.DIABETES_MODEL_URL,
     'Diabetes risk',
     'diabetes'
 );

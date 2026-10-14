@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from pathlib import Path
 import joblib
 import numpy as np
 
@@ -7,11 +8,11 @@ app = FastAPI(title="Disease Prediction API")
 
 # Load the trained model once when the server starts
 try:
-    model = joblib.load("my_model.joblib")
+    model = joblib.load(Path(__file__).with_name("my_model.joblib"))
 except Exception as e:
     raise RuntimeError(f"Failed to load model: {e}")
 
-# The 44 symptom columns the model was trained on, in order
+# Use the feature order recorded by the trained model.
 FEATURES = list(model.feature_names_in_)
 
 
@@ -42,4 +43,4 @@ def predict(data: SymptomInput):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main_basic:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main_basic:app", host="0.0.0.0", port=8001, reload=True)
