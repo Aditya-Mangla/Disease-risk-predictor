@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
 
 import { user } from '../models/user.model.js';
 import { ApiError } from '../utils/ApiError.js';
@@ -19,6 +18,7 @@ const generateAccessAndRefreshToken = async (userID) => {
         return { accessToken, refreshToken }
 
     } catch (error){
+        console.error("Failed to generate user authentication tokens:", error)
         throw new ApiError(500, "Something went wrong while generating access and refresh token")
     }
 }
@@ -26,26 +26,34 @@ const generateAccessAndRefreshToken = async (userID) => {
 const registerUser = AsyncHandler(async (req, res) => {
 
     // checking if all fields have value in them or not
-    const { fullName, email, mobileNumber, password } = req.body;
-    if(
-        [fullName, email, mobileNumber, password].some((field) => field.trim() === "")
-    ){
+    const { fullName, email, mobileNumber, password } = req.body || {};
+    if ([fullName, email, mobileNumber, password].some(
+        (field) => typeof field !== "string" || field.trim() === ""
+    )) {
         throw new ApiError(400, "All fields are required")
     }
 
+    const normalizedFullName = fullName.trim()
+    const normalizedEmail = email.trim()
+    const normalizedMobileNumber = mobileNumber.trim()
+
     // checking if user already exists with the same values
     const existingUser = await user.findOne({
-        $or: [{fullName}, {email}, {mobileNumber}]
+        $or: [
+            {fullName: normalizedFullName},
+            {email: normalizedEmail},
+            {mobileNumber: normalizedMobileNumber}
+        ]
     })
     if(existingUser){
-        throw new ApiError(402, "User already exists")
+        throw new ApiError(409, "User already exists")
     }
 
     // creating a new user entry in the database
     const User = await user.create({
-        fullName,
-        mobileNumber,
-        email,
+        fullName: normalizedFullName,
+        mobileNumber: normalizedMobileNumber,
+        email: normalizedEmail,
         password
     })
 
@@ -64,14 +72,13 @@ const registerUser = AsyncHandler(async (req, res) => {
 })
 
 const loginUser = AsyncHandler(async (req, res) => {
-    const { fullName, email, password } = req.body;
-    if(!email || !password){
+    const { email, password } = req.body || {};
+    if (typeof email !== "string" || !email.trim() ||
+        typeof password !== "string" || !password) {
         throw new ApiError(400, "Both email and password are required")
     }
 
-    const User = await user.findOne({
-        $or: [{email}, {fullName}]
-    })
+    const User = await user.findOne({email: email.trim()})
     if(!User){
         throw new ApiError(404, "User does not exists")
     }
