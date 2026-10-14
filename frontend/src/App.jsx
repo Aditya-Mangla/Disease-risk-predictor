@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { Routes, Route, Navigate, Link, useNavigate } from "react-router-dom";
 import {
+  DISEASE_API_URL,
+  sendBackendRequest,
+  extractResult,
   isLoggedIn,
   getCurrentUser,
   logout,
   registerUser,
   loginUser,
-} from "./auth";
-import { DISEASE_API_URL, sendBackendRequest, extractResult } from "./api";
+} from "./api";
+import DiabetesRisk from "./DiabetesRisk";
+import HeartRisk from "./HeartRisk";
+import StrokeRisk from "./StrokeRisk";
 
 const symptoms = [
   "chest_pain",
@@ -103,8 +108,12 @@ function Home() {
               </button>
               <button
                 onClick={async () => {
-                  await logout();
-                  window.location.reload();
+                  try {
+                    await logout();
+                    window.location.reload();
+                  } catch (error) {
+                    window.alert(error.message || "Logout failed. Please try again.");
+                  }
                 }}
               >
                 Logout
@@ -127,9 +136,18 @@ function Home() {
               Check your symptoms and get an AI-powered disease prediction.
               Registered users can also check their estimated health risk.
             </p>
-            <button className="primary-btn" onClick={start}>
-              Start Health Assessment <i className="fa-solid fa-arrow-right" />
-            </button>
+            <div className="hero-actions">
+              <button className="primary-btn" onClick={start}>
+                Start Health Assessment{" "}
+                <i className="fa-solid fa-arrow-right" />
+              </button>
+              {user && (
+                <Link to="/risk-assessment" className="risk-assessment-link">
+                  Disease-Specific Risk Assessment
+                  <i className="fa-solid fa-arrow-right" />
+                </Link>
+              )}
+            </div>
           </div>
           <div className="hero-illustration">
             <div className="hero-circle" />
@@ -203,6 +221,77 @@ function Home() {
     </>
   );
 }
+
+function RiskAssessment() {
+  const [predictedDisease, setPredictedDisease] = useState(null);
+  const [selectedDisease, setSelectedDisease] = useState(null);
+
+  const runInitialPrediction = () => {
+    setPredictedDisease("stroke");
+  };
+
+  if (selectedDisease === "diabetes") return <DiabetesRisk />;
+  if (selectedDisease === "heart") return <HeartRisk />;
+  if (selectedDisease === "stroke") return <StrokeRisk />;
+
+  if (!predictedDisease) {
+    return (
+      <div className="prediction-page">
+        <div className="prediction-card">
+          <span className="assessment-label">DISEASE RISK ASSESSMENT</span>
+          <h1>Initial Health Assessment</h1>
+          <p>
+            Complete the initial assessment to identify the disease for which a
+            detailed risk assessment is available.
+          </p>
+          <p className="prediction-notice">
+            Disease selection is currently a demo and does not analyze your
+            health information.
+          </p>
+          <button className="primary-button" onClick={runInitialPrediction}>
+            Submit Assessment →
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const diseaseName =
+    predictedDisease === "diabetes"
+      ? "Diabetes"
+      : predictedDisease === "heart"
+        ? "Heart Disease"
+        : "Stroke";
+
+  return (
+    <div className="prediction-page">
+      <div className="prediction-card">
+        <span className="assessment-label">INITIAL ASSESSMENT COMPLETE</span>
+        <h1>Predicted Disease</h1>
+        <h2>{diseaseName}</h2>
+        <p>
+          Based on the initial assessment, the predicted disease is{" "}
+          <strong>{diseaseName}</strong>.
+        </p>
+        <p>
+          Continue with the detailed assessment to calculate the
+          disease-specific risk score.
+        </p>
+        <p className="prediction-notice">
+          This demo currently selects Stroke automatically; it is not a medical
+          diagnosis.
+        </p>
+        <button
+          className="primary-button"
+          onClick={() => setSelectedDisease(predictedDisease)}
+        >
+          Check {diseaseName} Risk →
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function Feature({ icon, title, children }) {
   return (
     <div className="feature-card">
@@ -700,8 +789,8 @@ function Register() {
       return;
     }
     try {
-      await registerUser({ name, email, mobileNumber, password });
-      nav("/");
+      await registerUser({ fullName: name, email, mobileNumber, password });
+      nav("/login");
     } catch (error) {
       setErr(error.message || "Registration failed. Please try again.");
     }
@@ -934,9 +1023,13 @@ function Dashboard() {
           <Link to="/">Home</Link>
           <button
             onClick={async () => {
-              await logout();
-              nav("/");
-            }}
+                  try {
+                    await logout();
+                    nav("/");
+                  } catch (error) {
+                    window.alert(error.message || "Logout failed. Please try again.");
+                  }
+                }}
           >
             Logout
           </button>
@@ -1057,6 +1150,14 @@ export default function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route
+        path="/risk-assessment"
+        element={
+          <Protected>
+            <RiskAssessment />
+          </Protected>
+        }
+      />
       <Route
         path="/dashboard"
         element={

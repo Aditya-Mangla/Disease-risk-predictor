@@ -1,6 +1,5 @@
 
 import React, { useState } from "react";
-import "./appN.css";
 
 const initialData = {
   Age: "",
@@ -1005,4 +1004,3 @@ function NavigationButtons({
 
 
 export default DiabetesRisk;
-
