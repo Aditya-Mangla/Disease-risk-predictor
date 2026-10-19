@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate, Link, useNavigate } from "react-router-dom";
 import {
   DISEASE_API_URL,
   sendBackendRequest,
+  savePrediction,
+  getPredictionHistory,
   extractResult,
   isLoggedIn,
   getCurrentUser,
@@ -342,30 +344,25 @@ function Assessment({ onClose }) {
       return;
     }
     const payload = {
-      symptoms: Object.fromEntries(symptoms.map((s, i) => [s, answers[i]])),
-      answers,
-      symptomNames: symptoms,
-      user: getCurrentUser(),
+      symptoms: symptoms.filter((_, i) => answers[i]),
     };
     setState("loading");
     try {
       const data = await sendBackendRequest(DISEASE_API_URL, payload);
       const parsed = extractResult(data);
       if (!parsed) throw new Error("Backend returned no result.");
-      const historyKey =
-        "diseaseRiskHistory_" +
-        (getCurrentUser()?.email || getCurrentUser()?.username || "user");
-      let history = [];
       try {
-        history = JSON.parse(localStorage.getItem(historyKey)) || [];
-      } catch {}
-      history.unshift({
-        disease: parsed.disease || "-",
-        riskPercentage: parsed.percentage ?? null,
-        riskLevel: parsed.level || "-",
-        date: new Date().toLocaleString(),
-      });
-      localStorage.setItem(historyKey, JSON.stringify(history));
+        await savePrediction({
+          type: "disease",
+          stage: "classification",
+          predictedDisease: parsed.disease,
+          inputData: payload,
+          result: parsed.raw,
+          status: "completed",
+        });
+      } catch (saveError) {
+        throw new Error(`Prediction completed but could not be saved: ${saveError.message}`);
+      }
       setResult(parsed);
       setState("result");
     } catch (e) {
@@ -1009,12 +1006,33 @@ function InfoFeature({ icon, title, text }) {
 function Dashboard() {
   const nav = useNavigate();
   const user = getCurrentUser();
-  const key = "diseaseRiskHistory_" + (user?.email || user?.username || "user");
-  let history = [];
-  try {
-    history = JSON.parse(localStorage.getItem(key)) || [];
-  } catch {}
-  const latest = history[0];
+  const [history, setHistory] = useState([]);
+  const [historyError, setHistoryError] = useState("");
+  const [historyLoading, setHistoryLoading] = useState(true);
+  useEffect(() => {
+    let active = true;
+    getPredictionHistory()
+      .then((records) => {
+        if (active) setHistory(records);
+      })
+      .catch((error) => {
+        if (active) setHistoryError(error.message || "Could not load assessment history.");
+      })
+      .finally(() => {
+        if (active) setHistoryLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+  const historyItems = history.map((record) => ({
+    id: record._id,
+    disease: record.predictedDisease || record.result?.predicted_disease || "-",
+    riskPercentage: record.result?.risk_percentage ?? record.result?.riskPercentage ?? null,
+    riskLevel: record.result?.risk_level ?? record.result?.riskLevel ?? null,
+    date: record.createdAt ? new Date(record.createdAt).toLocaleString() : "-",
+  }));
+  const latest = historyItems[0];
   return (
     <>
       <header className="dashboard-navbar">
@@ -1052,7 +1070,7 @@ function Dashboard() {
           <Stat
             icon="clipboard-check"
             label="Total Assessments"
-            value={history.length}
+            value={historyItems.length}
           />
           <Stat
             icon="virus"
@@ -1085,8 +1103,11 @@ function Dashboard() {
               <h2>Your Assessments</h2>
             </div>
           </div>
+          {historyError && <p role="alert">{historyError}</p>}
           <div className="history-container">
-            {history.length === 0 ? (
+            {historyLoading ? (
+              <p>Loading your assessment history...</p>
+            ) : historyItems.length === 0 ? (
               <div className="empty-history">
                 <i
                   className="fa-solid fa-clipboard"
@@ -1099,8 +1120,8 @@ function Dashboard() {
                 </p>
               </div>
             ) : (
-              history.map((item, i) => (
-                <div className="history-card" key={i}>
+              historyItems.map((item) => (
+                <div className="history-card" key={item.id}>
                   <div>
                     <small>DISEASE</small>
                     <strong>{item.disease || "-"}</strong>

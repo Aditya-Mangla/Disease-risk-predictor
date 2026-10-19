@@ -1,31 +1,57 @@
-export const DISEASE_API_URL = import.meta.env.VITE_DISEASE_API_URL || 'http://127.0.0.1:5000/predict-disease';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
+export const DISEASE_API_URL = import.meta.env.VITE_DISEASE_API_URL || `${API_BASE_URL}/prediction/disease-prediction`;
 export const BACKEND_TIMEOUT = 15000;
-const API_BASE_URL = import.meta.env.VITE_BACKEND_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api/v1';
 const USER_KEY = 'diseaseRiskUser';
 const ACCESS_TOKEN_KEY = 'diseaseRiskAccessToken';
 const REFRESH_TOKEN_KEY = 'diseaseRiskRefreshToken';
 
-export async function sendBackendRequest(url, payload) {
+async function requestBackend(url, { method = 'POST', payload } = {}) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), BACKEND_TIMEOUT);
   try {
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers.Authorization = `Bearer ${token}`;
+
     const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      method,
+      headers,
+      credentials: 'include',
+      ...(payload === undefined ? {} : { body: JSON.stringify(payload) }),
       signal: controller.signal
     });
-    if (!response.ok) throw new Error(`Server returned ${response.status}`);
     const type = response.headers.get('content-type') || '';
-    if (!type.toLowerCase().includes('application/json')) throw new Error('Backend did not return JSON.');
-    const data = await response.json();
+    const isJson = type.toLowerCase().includes('application/json');
+    const data = isJson ? await response.json() : null;
+    if (!response.ok) {
+      throw new Error(data?.message || `Server returned ${response.status}`);
+    }
+    if (!isJson) throw new Error('Backend did not return JSON.');
     if (data === null || data === undefined) throw new Error('Backend returned an empty response.');
     return data;
   } catch (error) {
     if (error.name === 'AbortError') throw new Error('Backend timeout');
-    if (error instanceof TypeError) throw new Error('Cannot connect to the backend. Start your backend and check the API URL.');
+    if (error instanceof TypeError) throw new Error('Cannot reach the backend. Check that it is running, the API URL is correct, and CORS allows this frontend origin.');
     throw error;
   } finally { clearTimeout(timeout); }
+}
+
+export function sendBackendRequest(url, payload) {
+  return requestBackend(url, { method: 'POST', payload });
+}
+
+export function savePrediction(payload) {
+  return sendBackendRequest(`${API_BASE_URL}/prediction/create`, payload);
+}
+
+export async function getPredictionHistory() {
+  const response = await requestBackend(`${API_BASE_URL}/prediction/history`, {
+    method: 'GET',
+  });
+  if (!Array.isArray(response.data)) {
+    throw new Error('Backend returned an invalid prediction history.');
+  }
+  return response.data;
 }
 
 async function requestUserRoute(endpoint, { payload, token } = {}) {
@@ -42,7 +68,7 @@ async function requestUserRoute(endpoint, { payload, token } = {}) {
     });
   } catch (error) {
     if (error instanceof TypeError) {
-      throw new Error('Cannot connect to the user backend. Check that the backend is running and the API URL is correct.');
+      throw new Error('Cannot reach the user backend. Check that it is running, the API URL is correct, and CORS allows this frontend origin.');
     }
     throw error;
   }
@@ -121,12 +147,15 @@ function clearUserSession() {
 }
 
 export function extractResult(data) {
-  if (typeof data === 'string') return { disease: data };
-  if (!data || typeof data !== 'object') return null;
+  const resultData = data && typeof data === 'object' && data.data !== undefined
+    ? data.data
+    : data;
+  if (typeof resultData === 'string') return { disease: resultData };
+  if (!resultData || typeof resultData !== 'object') return null;
   return {
-    disease: data.disease ?? data.prediction ?? data.predicted_disease ?? data.predictedDisease ?? data.result ?? null,
-    percentage: data.risk_percentage ?? data.riskPercentage ?? data.risk_score ?? data.riskScore ?? data.percentage ?? null,
-    level: data.risk_level ?? data.riskLevel ?? data.level ?? data.risk ?? null,
-    raw: data
+    disease: resultData.disease ?? resultData.prediction ?? resultData.predicted_disease ?? resultData.predictedDisease ?? resultData.result ?? null,
+    percentage: resultData.risk_percentage ?? resultData.riskPercentage ?? resultData.risk_score ?? resultData.riskScore ?? resultData.percentage ?? null,
+    level: resultData.risk_level ?? resultData.riskLevel ?? resultData.level ?? resultData.risk ?? null,
+    raw: resultData
   };
 }

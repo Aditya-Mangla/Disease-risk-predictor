@@ -1,7 +1,6 @@
 import {ApiError} from '../utils/ApiError.js';
 import {ApiResponse} from '../utils/ApiResponse.js';
 import {AsyncHandler} from '../utils/AsyncHandler.js';
-import fs from 'fs';
 import {prediction} from '../models/prediction.model.js';
 
 
